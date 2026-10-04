@@ -27,3 +27,21 @@ export function setGameState(obj) {
     }
   }
 }
+
+export function resetGameState() {
+  setGameState({
+    currentClick: 2,
+    currentCouple: [],
+    couples: [],
+    currentPlayer: 'player1',
+    player1: {
+      couples: null,
+      score: 0,
+    },
+    player2: {
+      couples: null,
+      score: 0,
+    },
+    steps: 0,
+  });
+}

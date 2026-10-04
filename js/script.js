@@ -3,18 +3,32 @@ import videoElement from './components/videoElement.js';
 import gameElement from './components/gameElement.js';
 import { cardsNumber } from './states.js';
 import generateCards from './utils/generateCards.js';
-import { getGameState, setGameState } from './states.js';
+import { getGameState, resetGameState } from './states.js';
 import playAudio from './utils/playAudio.js';
 import winnerModal from './components/winnerModal.js';
+import closeModal from './utils/closeModal.js';
+import setGame from './utils/setGame.js';
 
 const container = createElement('div', { class: 'container' });
 const gameEl = gameElement();
 const videoEl = videoElement();
 
 container.append(gameEl);
-document.body.prepend(container, videoEl);
+document.body.prepend(videoEl, container);
+
+setGame();
 
 window.addEventListener('click', function (e) {
+  console.log(e.target);
+  if (e.target.closest('.modal__btn')) {
+    closeModal();
+    resetGameState();
+  }
+
+  if (e.target.closest('.modal__close')) {
+    closeModal();
+  }
+
   if (e.target.closest('.game__card')) {
     const currentCard = e.target.closest('.game__card');
     currentCard.classList.add('game__card_rotate');
@@ -95,7 +109,7 @@ window.addEventListener('click', function (e) {
             // open modal
             setTimeout(function () {
               const modal = winnerModal(winner);
-              document.body.append(modal);
+              document.body.prepend(modal);
             }, 1000);
           } else {
             cards.forEach((card) => {

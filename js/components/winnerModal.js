@@ -2,6 +2,7 @@ import createElement from '../utils/createElement.js';
 import { getGameState } from '../states.js';
 
 export default function winnerModal(winner) {
+  console.log(winner);
   const state = getGameState();
 
   const modal = createElement('div', { class: 'modal' });
@@ -14,7 +15,7 @@ export default function winnerModal(winner) {
   const subtitle = createElement(
     'p',
     { class: 'modal__subtitle' },
-    `Score ${state[winner].score}`,
+    `Score: ${state[winner].score}`,
   );
   const totalSteps = createElement(
     'div',
@@ -22,7 +23,20 @@ export default function winnerModal(winner) {
     `Steps: ${state.steps}`,
   );
 
-  modalContent.append(title, subtitle, totalSteps);
+  const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
+  const newGameBtn = createElement(
+    'button',
+    { class: 'btn modal__btn' },
+    'New Game',
+  );
+  const closeBtn = createElement(
+    'button',
+    { class: 'btn modal__close' },
+    'Close',
+  );
+
+  buttonsWrapper.append(newGameBtn, closeBtn);
+  modalContent.append(title, subtitle, totalSteps, buttonsWrapper);
   modal.append(modalContent);
   return modal;
 }

@@ -53,12 +53,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
-  text-shadow: 0 0 5px #000;
+  color: #000;
   background: linear-gradient(45deg, #c90677, #19f6c7);
   font-family: 'Press Start 2P', system-ui;
-  font-size: 20px;
-  padding: 20px 30px;
+  font-size: 14px;
+  padding: 10px 30px;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.5s;
