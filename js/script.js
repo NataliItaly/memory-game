@@ -4,6 +4,8 @@ import gameElement from './components/gameElement.js';
 import { cardsNumber } from './states.js';
 import generateCards from './utils/generateCards.js';
 import { getGameState, setGameState } from './states.js';
+import playAudio from './utils/playAudio.js';
+import winnerModal from './components/winnerModal.js';
 
 const container = createElement('div', { class: 'container' });
 const gameEl = gameElement();
@@ -20,15 +22,18 @@ window.addEventListener('click', function (e) {
     const players = document.querySelectorAll('.player');
 
     const currentGameState = getGameState();
+    currentGameState.steps += 1;
     if (currentGameState.currentClick > 0) {
       const currentCardId = currentCard.dataset.id;
-      //console.log(currentCardId);
-      //console.log('click on begin', currentGameState.currentClick);
 
       currentGameState.currentCouple.push(currentCardId);
 
       currentGameState.currentClick -= 1;
       if (currentGameState.currentClick === 0) {
+        // block all the cards except opened
+        const cards = document.querySelectorAll('.game__card');
+        cards.forEach((card) => card.classList.add('game__card_blocked'));
+
         // check if 2 last clicks was successful
         if (
           currentGameState.currentCouple[0] ===
@@ -41,23 +46,25 @@ window.addEventListener('click', function (e) {
           const openCards = document.querySelectorAll(
             `.game__card[data-id="${currentGameState.currentCouple[0]}"]`,
           );
-          console.log(openCards);
+
           openCards.forEach((card) => {
             card.classList.remove('game__card_rotate');
             card.classList.add('game__card_open');
           });
 
+          // set score
           const currentStepElement = document.querySelector(
             `#${currentGameState.currentPlayer} .player__step`,
           );
-          console.log(currentStepElement);
+
           currentStepElement.textContent =
             currentGameState[currentGameState.currentPlayer].score;
           currentStepElement.classList.add('player__step_active');
+          playAudio('./assets/score-sound.mp3');
 
           setTimeout(function () {
             currentStepElement.classList.remove('player__step_active');
-          }, 500);
+          }, 2000);
         }
 
         currentGameState.currentCouple = [];
@@ -65,11 +72,42 @@ window.addEventListener('click', function (e) {
         currentGameState.currentPlayer =
           currentGameState.currentPlayer === 'player1' ? 'player2' : 'player1';
 
+        // set cards backwards and change player
         setTimeout(function () {
-          const cards = document.querySelectorAll('.game__card');
-          cards.forEach((card) => card.classList.remove('game__card_rotate'));
-          players.forEach((player) => player.classList.toggle('player_active'));
-        }, 1000);
+          // check if all cards are open
+          if (
+            Array.from(cards).every((card) =>
+              card.classList.contains('game__card_open'),
+            )
+          ) {
+            players.forEach((player) =>
+              player.classList.remove('player_active'),
+            );
+
+            const winner =
+              currentGameState.player1.score > currentGameState.player2.score
+                ? 'player1'
+                : 'player2';
+            document
+              .querySelector(`#${winner} .player__step`)
+              .classList.add('player__step_active');
+
+            // open modal
+            setTimeout(function () {
+              const modal = winnerModal(winner);
+              document.body.append(modal);
+            }, 1000);
+          } else {
+            cards.forEach((card) => {
+              card.classList.remove('game__card_rotate');
+              card.classList.remove('game__card_blocked');
+            });
+
+            players.forEach((player) =>
+              player.classList.toggle('player_active'),
+            );
+          }
+        }, 1500);
 
         currentGameState.currentClick = 2;
       }
