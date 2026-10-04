@@ -1,4 +1,9 @@
 .game {
+  display: flex;
+  gap: 20px;
+}
+
+.game__screen {
   max-width: 510px;
   display: flex;
   justify-content: center;
@@ -18,7 +23,7 @@
   --_a: calc(90deg * var(--f));
   aspect-ratio: calc(1 + var(--f));
   clip-path: inset(0 var(--_f) 0 0 round var(--r));
-  transform: perspective(400px) var(--_t, rotateY(var(--_a)));
+  transform: perspective(400px) var(--_t, rotateX(var(--_a)));
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
@@ -43,4 +48,10 @@
 
 .game__card_rotate {
   transform: rotateY(180deg);
+  pointer-events: none;
+}
+
+.game__card_open {
+  transform: perspective(400px) rotateY(180deg);
+  pointer-events: none;
 }

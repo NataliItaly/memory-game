@@ -49,3 +49,11 @@
 .game__card_rotate .card__back {
   opacity: 1;
 }
+
+.game__card_open .card__front {
+  opacity: 0;
+}
+
+.game__card_open .card__back {
+  opacity: 1;
+}

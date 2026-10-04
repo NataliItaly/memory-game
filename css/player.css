@@ -1,0 +1,24 @@
+.player {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  filter: brightness(0.4);
+  transition: 0.4s;
+}
+
+.player_active {
+  filter: none;
+}
+
+.player__step {
+  transform: scale(0);
+  transition: 0.4s;
+}
+
+.player__step_active {
+  color: rgb(247, 46, 186);
+  transform: scale(2);
+  transition: 0.4s;
+}
