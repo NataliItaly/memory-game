@@ -2,7 +2,6 @@ import createElement from '../utils/createElement.js';
 import { getGameState } from '../states.js';
 
 export default function winnerModal(winner) {
-  console.log(winner);
   const state = getGameState();
 
   const modal = createElement('div', { class: 'modal' });

@@ -1,6 +1,7 @@
 .game {
   display: flex;
   gap: 20px;
+  padding-top: 20px;
 }
 
 .game__screen {

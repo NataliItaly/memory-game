@@ -8,6 +8,7 @@
 }
 
 .player__title {
+  font-size: 22px;
   filter: brightness(0.4);
 }
 
@@ -16,6 +17,7 @@
 }
 
 .player__step {
+  font-size: 28px;
   transform: scale(1);
   transition: 0.4s;
 }

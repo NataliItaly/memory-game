@@ -1,6 +1,7 @@
 import createElement from './utils/createElement.js';
 import videoElement from './components/videoElement.js';
 import gameElement from './components/gameElement.js';
+import headerElement from './components/headerElement.js';
 import { cardsNumber } from './states.js';
 import generateCards from './utils/generateCards.js';
 import { getGameState, resetGameState } from './states.js';
@@ -9,12 +10,13 @@ import winnerModal from './components/winnerModal.js';
 import closeModal from './utils/closeModal.js';
 import setGame from './utils/setGame.js';
 
-const container = createElement('div', { class: 'container' });
+const containerEl = createElement('div', { class: 'container' });
+const headerEl = headerElement();
 const gameEl = gameElement();
 const videoEl = videoElement();
 
-container.append(gameEl);
-document.body.prepend(videoEl, container);
+containerEl.append(headerEl, gameEl);
+document.body.prepend(videoEl, containerEl);
 
 setGame();
 
