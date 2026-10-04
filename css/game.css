@@ -1,0 +1,57 @@
+.game {
+  display: flex;
+  gap: 20px;
+}
+
+.game__screen {
+  max-width: 510px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  column-gap: 10px;
+  margin: 0 auto;
+}
+
+.game__card {
+  flex: 0 0 120px;
+  height: 120px;
+  background: #643f82;
+  --f: 0.05;
+  --r: 5px;
+  --_f: calc(100% * var(--f)/(1 + var(--f)));
+  --_a: calc(90deg * var(--f));
+  aspect-ratio: calc(1 + var(--f));
+  clip-path: inset(0 var(--_f) 0 0 round var(--r));
+  transform: perspective(400px) var(--_t, rotateX(var(--_a)));
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.6s ease-in-out;
+  perspective: 1000px;
+}
+
+.game__card:hover {
+  clip-path: inset(0 0 0 var(--_f) round var(--r));
+  --_t: translateX(calc(-1 * var(--_f))) rotateY(calc(-1 * var(--_a)))
+    animation: rotation 6s ease-in infinite forwards;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-50deg);
+  }
+}
+
+.game__card_rotate {
+  transform: rotateY(180deg);
+  pointer-events: none;
+}
+
+.game__card_open {
+  transform: perspective(400px) rotateY(180deg);
+  pointer-events: none;
+}
