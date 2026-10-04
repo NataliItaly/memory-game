@@ -13,6 +13,7 @@ const gameState = {
     couples: null,
     score: 0,
   },
+  steps: 0,
 };
 
 export function getGameState() {
