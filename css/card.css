@@ -1,0 +1,51 @@
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+}
+
+.card__front {
+  background:
+    url(../assets/galaxy-1.svg) no-repeat center / 40px,
+    #2a0445;
+}
+
+.card__back {
+  opacity: 0;
+  transition: 1s;
+}
+
+.card__img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  transition: 1s ease-in;
+  -webkit-mask: linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100%
+    100%/250% 250%;
+}
+
+.card_rotate {
+}
+
+.game__card_rotate .card__front {
+  opacity: 0;
+}
+
+.game__card_rotate .card__back {
+  opacity: 1;
+}
