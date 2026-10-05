@@ -7,7 +7,7 @@ export default function headerElement() {
 
   const newGameBtn = createElement(
     'button',
-    { class: 'btn header__btn' },
+    { class: 'btn header__btn init-game-btn' },
     'New Game',
   );
 

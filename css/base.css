@@ -58,7 +58,7 @@ h1 {
   justify-content: center;
   align-items: center;
   color: #000;
-  background: linear-gradient(45deg, #c90677, #19f6c7);
+  background: linear-gradient(45deg, #f874d0, #19f6c7);
   font-family: 'Press Start 2P', system-ui;
   font-size: 14px;
   padding: 10px 30px;
@@ -76,7 +76,7 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(45deg, #c90677, #19f6c7);
+  background: linear-gradient(45deg, #f874d0, #19f6c7);
   opacity: 0;
 }
 
