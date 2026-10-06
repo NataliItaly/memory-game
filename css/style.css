@@ -1,7 +1,9 @@
 @import './base.css';
+@import './header.css';
 @import './game.css';
 @import './card.css';
 @import './player.css';
+@import './modal.css';
 /* @import './header.css';
 @import './main.css';
 @import './popup.css';

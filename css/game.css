@@ -1,6 +1,25 @@
 .game {
-  display: flex;
+  /* display: flex; */
   gap: 20px;
+  padding-top: 20px;
+}
+
+.game__header {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  gap: 20px;
+}
+
+.game__steps {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 40px;
+  color: #fa4cf1;
+  background: #0c051a;
+  border-radius: 50%;
 }
 
 .game__screen {
@@ -47,6 +66,7 @@
 }
 
 .game__card_rotate {
+  background: #a116ac;
   transform: rotateY(180deg);
   pointer-events: none;
 }
