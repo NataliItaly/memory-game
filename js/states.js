@@ -54,5 +54,7 @@ export function setGameState(obj) {
 }
 
 export function resetGameState() {
+  const games = getGameState().games;
   setGameState(structuredClone(initialGameState));
+  setGameState({ games });
 }

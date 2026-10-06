@@ -4,11 +4,20 @@ import tableStringElement from './tableStringElement.js';
 
 export default function winnerTableElement() {
   const games = getGameState().games;
+
+  const info = createElement(
+    'div',
+    { class: 'modal__info' },
+    'There are no winners yet',
+  );
   const table = createElement('div', { class: 'modal modal_table' });
-  const tableContent = createElement('div', { class: 'modal__content' });
+  const tableContent = createElement('div', {
+    class: 'modal__content modal__content_table',
+  });
   const title = createElement('h3', { class: 'modal__title' }, 'Winners');
   const tableText = createElement('div', { class: 'modal__text' });
-  games.forEach((game) => tableText.append(tableStringElement()));
+
+  games.forEach((game, i) => tableText.append(tableStringElement(game, i)));
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
   const closeBtn = createElement(
@@ -18,7 +27,12 @@ export default function winnerTableElement() {
   );
 
   buttonsWrapper.append(closeBtn);
-  tableContent.append(title, tableText, buttonsWrapper);
+
+  if (games.length === 0) {
+    tableContent.append(info, buttonsWrapper);
+  } else {
+    tableContent.append(title, tableText, buttonsWrapper);
+  }
   table.append(tableContent);
 
   return table;

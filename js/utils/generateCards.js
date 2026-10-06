@@ -11,6 +11,7 @@ export default function generateCards() {
   });
   const shuffledElements = shuffleArr(cardElements);
 
+  // save shuffled elements to the game state
   const currentSequence = shuffledElements.map((card) => card.dataset.id);
   setGameState({ cardsSequence: currentSequence });
 
