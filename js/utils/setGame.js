@@ -1,9 +1,8 @@
-import { getGameState } from '../states.js';
-import generateCards from './generateCards.js';
+import { getGameState, resetGameState, setGameState } from '../states.js';
 import shuffleArr from './shuffleArray.js';
+import cardElement from '../components/cardElement.js';
 
 export default function setGame(game) {
-  console.log('game', game);
   const state = getGameState();
   const player1El = game.player1;
   const player2El = game.player2;
@@ -20,25 +19,24 @@ export default function setGame(game) {
 
   const gameScreen = game.gameScreen;
   const cards = gameScreen.querySelectorAll('.game__card');
-  console.log('isFinished', state.isFinished);
-  if (state.isFinished) {
-    // shuffle existing cards
-    const shuffledCards = shuffleArr([...cards]);
-    console.log('shuffled cards', shuffledCards);
-    shuffledCards.forEach((card) => {
-      card.classList.remove(
-        'game__card_rotate',
-        'game__card_open',
-        'game__card_block',
-      );
-      gameScreen.append(card);
-    });
-  } else {
-    // display cards that was already opened
-    cards.forEach(
-      (card) =>
-        state.couples.includes(card.dataset.id) &&
-        card.classList.add('game__card_open'),
+
+  if (state.cardsSequence.length > 0) {
+    console.log(
+      'from set cards state.isFinished === false - the game in progress',
     );
+
+    // display cards that was already opened
+    cards.forEach((card) => {
+      card.remove();
+    });
+
+    state.cardsSequence.forEach((el) => {
+      const cardEl = cardElement(el);
+
+      if (state.couples.includes(cardEl.dataset.id)) {
+        cardEl.classList.add('game__card_open');
+      }
+      game.gameScreen.append(cardEl);
+    });
   }
 }

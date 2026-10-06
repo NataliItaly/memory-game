@@ -35,3 +35,12 @@
 .modal__btn::after {
   background: linear-gradient(45deg, #f189c6, #55007c);
 }
+
+.modal__text {
+  display: grid;
+}
+
+.modal__string {
+  display: grid;
+  grid-template-columns: 20px, repeat(1fr, 4);
+}

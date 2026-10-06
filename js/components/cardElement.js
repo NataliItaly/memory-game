@@ -1,9 +1,7 @@
 import { cardsNumber } from '../states.js';
 import createElement from '../utils/createElement.js';
 
-export default function cardElement(i) {
-  const cardId = i % (cardsNumber / 2);
-
+export default function cardElement(cardId) {
   const card = createElement('div', {
     class: 'game__card',
     'data-id': cardId,
@@ -14,8 +12,8 @@ export default function cardElement(i) {
 
   const img = createElement('img', {
     class: 'card__img',
-    src: `./assets/cards/${cardId + 1}.png`,
-    alt: `Alien id ${i}`,
+    src: `./assets/cards/${cardId}.png`,
+    alt: `Alien id ${cardId}`,
   });
 
   cardBack.append(img);

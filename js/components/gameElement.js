@@ -14,9 +14,9 @@ export default function gameElement() {
   );
   const gameScreen = createElement('div', { class: 'game__screen' });
 
-  const cards = generateCards();
+  /* const cards = generateCards();
   cards.forEach((card) => gameScreen.append(card));
-
+ */
   gameHeader.append(player1, gameSteps, player2);
   game.append(gameHeader, gameScreen);
 

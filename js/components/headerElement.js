@@ -13,7 +13,7 @@ export default function headerElement() {
 
   const scoreBtn = createElement(
     'button',
-    { class: 'btn header__score_btn' },
+    { class: 'btn header__score_btn', id: 'score-table' },
     'Winners table',
   );
 

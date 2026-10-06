@@ -15,6 +15,7 @@ const initialGameState = {
   currentClick: 2,
   currentCouple: [],
   couples: [],
+  cardsSequence: [],
   currentPlayer: 'player1',
   player1: {
     score: 0,

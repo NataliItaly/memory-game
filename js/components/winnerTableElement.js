@@ -1,28 +1,25 @@
+import createElement from '../utils/createElement.js';
+import { getGameState } from '../states.js';
+import tableStringElement from './tableStringElement.js';
+
 export default function winnerTableElement() {
-  const modal = createElement('div', { class: 'modal' });
-  const modalContent = createElement('div', { class: 'modal__content' });
-  const title = createElement('h3', { class: 'modal__title' }, titleText);
-  const subtitle = createElement('p', { class: 'modal__subtitle' }, scoreText);
-  const totalSteps = createElement(
-    'div',
-    { class: 'modal__steps' },
-    `Steps: ${state.steps}`,
-  );
+  const games = getGameState().games;
+  const table = createElement('div', { class: 'modal modal_table' });
+  const tableContent = createElement('div', { class: 'modal__content' });
+  const title = createElement('h3', { class: 'modal__title' }, 'Winners');
+  const tableText = createElement('div', { class: 'modal__text' });
+  games.forEach((game) => tableText.append(tableStringElement()));
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
-  const newGameBtn = createElement(
-    'button',
-    { class: 'btn modal__btn init-game-btn' },
-    'New Game',
-  );
   const closeBtn = createElement(
     'button',
     { class: 'btn modal__close' },
     'Close',
   );
 
-  buttonsWrapper.append(newGameBtn, closeBtn);
-  modalContent.append(title, subtitle, totalSteps, buttonsWrapper);
-  modal.append(modalContent);
-  return modal;
+  buttonsWrapper.append(closeBtn);
+  tableContent.append(title, tableText, buttonsWrapper);
+  table.append(tableContent);
+
+  return table;
 }

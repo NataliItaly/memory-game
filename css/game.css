@@ -66,6 +66,7 @@
 }
 
 .game__card_rotate {
+  background: #a116ac;
   transform: rotateY(180deg);
   pointer-events: none;
 }
