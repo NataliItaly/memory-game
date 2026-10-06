@@ -12,11 +12,11 @@
 }
 
 .modal__content {
-  max-width: 400px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 35px;
   padding: 30px;
   border-radius: 10px;
   background: #0c051a;
@@ -26,6 +26,7 @@
   display: flex;
   justify-content: center;
   gap: 30px;
+  margin-top: 15px;
 }
 
 .modal__btn {
@@ -37,10 +38,29 @@
 }
 
 .modal__text {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .modal__string {
   display: grid;
-  grid-template-columns: 20px, repeat(1fr, 4);
+  grid-template-columns: 30px 100px repeat(3, 1fr);
+  gap: 20px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: #14082c;
+}
+
+.modal__string span {
+  text-align: center;
+}
+
+.modal__string span:nth-of-type(2) {
+  text-transform: uppercase;
+  color: #fa4cf1;
+}
+
+.modal__string span:nth-of-type(4) {
+  font-family: 'Courier New', Courier, monospace;
 }

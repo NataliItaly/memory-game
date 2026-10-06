@@ -20,11 +20,8 @@ export default function setGame(game) {
   const gameScreen = game.gameScreen;
   const cards = gameScreen.querySelectorAll('.game__card');
 
+  // cards sequence is always > 0 because it is created after game state reset
   if (state.cardsSequence.length > 0) {
-    console.log(
-      'from set cards state.isFinished === false - the game in progress',
-    );
-
     // display cards that was already opened
     cards.forEach((card) => {
       card.remove();

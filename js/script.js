@@ -2,8 +2,7 @@ import createElement from './utils/createElement.js';
 import videoElement from './components/videoElement.js';
 import gameElement from './components/gameElement.js';
 import headerElement from './components/headerElement.js';
-import { getIsFirstLoad, setIsFirstLoad } from './states.js';
-import { getGameState, resetGameState, setGameState } from './states.js';
+import { getGameState, setGameState } from './states.js';
 import playAudio from './utils/playAudio.js';
 import winnerModal from './components/winnerModal.js';
 import closeModal from './utils/closeModal.js';
@@ -19,16 +18,6 @@ const videoEl = videoElement();
 
 containerEl.append(headerEl, gameEl.game);
 document.body.prepend(videoEl, containerEl);
-/*
-window.addEventListener('DOMContentLoaded', function () {
-  const wasAlreadyLoaded = getIsFirstLoad();
-  if (wasAlreadyLoaded) {
-    initGame(gameEl);
-    setIsFirstLoad();
-  } else {
-    setGame(gameEl);
-  }
-}); */
 
 const state = getGameState();
 
@@ -63,7 +52,6 @@ window.addEventListener('click', function (e) {
 
   if (e.target.closest('.header__score_btn')) {
     const winnerTableEl = winnerTableElement();
-    //console.log(winnerTableEl);
     document.body.prepend(winnerTableEl);
   }
 
@@ -95,13 +83,11 @@ window.addEventListener('click', function (e) {
         currentCardId,
       ];
       gameState.currentClick -= 1;
-      //((currentCouple = [...currentCouple, currentCardId]),
-      //(currentClick -= 1));
+
       setGameState({
         currentClick: gameState.currentClick,
         currentCouple: gameState.currentCouple,
       });
-      //console.log(getGameState());
     }
 
     if (gameState.currentClick === 0) {
@@ -196,7 +182,7 @@ window.addEventListener('click', function (e) {
           const time = setTimeString(date);
           const result = {
             winner,
-            score: [player1.score, player2.score],
+            score: `${player1.score} - ${player2.score}`,
             time,
             steps,
           };

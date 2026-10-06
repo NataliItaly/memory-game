@@ -3,7 +3,7 @@ import createElement from '../utils/createElement.js';
 export default function tableStringElement(obj, i) {
   const string = createElement('div', { class: 'modal__string' });
 
-  const dateSpan = createElement('span', {}, i);
+  const dateSpan = createElement('span', {}, `${i + 1}`);
   string.append(dateSpan);
   for (let key in obj) {
     const span = createElement('span', {}, obj[key]);

@@ -4,6 +4,6 @@ import setGame from './setGame.js';
 
 export default function initGame(game) {
   resetGameState();
-  generateCards();
+  generateCards(); // cards sequence is created here
   setGame(game);
 }
