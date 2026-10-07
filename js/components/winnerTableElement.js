@@ -4,6 +4,10 @@ import tableStringElement from './tableStringElement.js';
 
 export default function winnerTableElement() {
   const games = getGameState().games;
+  const sortedGames = [...games]
+    .map((game) => structuredClone(game))
+    .sort((a, b) => a.steps - b.steps);
+  console.log(sortedGames);
 
   const info = createElement(
     'div',
@@ -17,7 +21,9 @@ export default function winnerTableElement() {
   const title = createElement('h3', { class: 'modal__title' }, 'Winners');
   const tableText = createElement('div', { class: 'modal__text' });
 
-  games.forEach((game, i) => tableText.append(tableStringElement(game, i)));
+  sortedGames
+    .slice(0, 10)
+    .forEach((game, i) => tableText.append(tableStringElement(game, i)));
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
   const closeBtn = createElement(
