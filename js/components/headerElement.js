@@ -13,10 +13,16 @@ export default function headerElement() {
 
   const scoreBtn = createElement(
     'button',
-    { class: 'btn header__score_btn', id: 'score-table' },
+    { class: 'btn header__score_btn', id: 'score-table-btn' },
     'Winners table',
   );
 
-  header.append(newGameBtn, title, scoreBtn);
+  const pausedGamesBtn = createElement(
+    'button',
+    { class: 'btn header__saved-games_btn', id: 'saved-table-btn' },
+    'Saved Games',
+  );
+
+  header.append(newGameBtn, title, scoreBtn, pausedGamesBtn);
   return header;
 }

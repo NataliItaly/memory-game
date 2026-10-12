@@ -16,15 +16,10 @@ const initialGameState = {
   currentCouple: [],
   couples: [],
   cardsSequence: [],
-  currentPlayer: 'player1',
-  player1: {
-    score: 0,
-  },
-  player2: {
-    score: 0,
-  },
+  score: 0,
   steps: 0,
-  isFinished: false,
+  isPlaying: false,
+  results: [],
   games: [],
 };
 

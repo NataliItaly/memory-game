@@ -10,17 +10,17 @@ import setGame from './utils/setGame.js';
 import initGame from './utils/initGame.js';
 import winnerTableElement from './components/winnerTableElement.js';
 import setTimeString from './utils/setTimeString.js';
-//localStorage.clear();
+
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
 const gameEl = gameElement();
 const videoEl = videoElement();
-
+console.log(gameEl);
 containerEl.append(headerEl, gameEl.game);
 document.body.prepend(videoEl, containerEl);
 
 const state = getGameState();
-
+console.log(state.cardsSequence);
 if (state.cardsSequence.length > 0) {
   setGame(gameEl);
 } else {
@@ -59,25 +59,11 @@ window.addEventListener('click', function (e) {
     const currentCard = e.target.closest('.game__card');
     currentCard.classList.add('game__card_rotate');
 
-    const players = document.querySelectorAll('.player');
-
-    let {
-      currentClick,
-      currentCouple,
-      couples,
-      currentPlayer,
-      player1,
-      player2,
-      steps,
-      isFinished,
-      games,
-    } = getGameState();
-
     const gameState = getGameState();
 
     const currentCardId = currentCard.dataset.id;
 
-    if (currentClick > 0) {
+    if (gameState.currentClick > 0) {
       gameState.currentCouple = [
         ...getGameState().currentCouple,
         currentCardId,
@@ -94,7 +80,7 @@ window.addEventListener('click', function (e) {
       // increase steps count
       gameState.steps += 1;
       setGameState({ steps: gameState.steps, currentClick: 2 });
-      gameEl.gameSteps.textContent = steps;
+      gameEl.gameSteps.textContent = gameState.steps;
 
       // block all the cards except opened
       const cards = gameEl.gameScreen.querySelectorAll('.game__card');
@@ -102,44 +88,35 @@ window.addEventListener('click', function (e) {
 
       // check if 2 last clicks was successful
       if (gameState.currentCouple[0] === gameState.currentCouple[1]) {
-        const currentScore = gameState[currentPlayer].score + 1;
-        gameState.couples = [...couples, currentCardId];
+        const currentScore = gameState.score + 1;
+        gameState.couples = [...gameState.couples, currentCardId];
 
         setGameState({
           couples: gameState.couples,
-          [currentPlayer]: { score: currentScore },
+          score: currentScore,
         });
 
         // set guessed card as open
         const openCards = gameEl.gameScreen.querySelectorAll(
-          `.game__card[data-id="${currentCouple[0]}"]`,
+          `.game__card[data-id="${gameState.currentCouple[0]}"]`,
         );
         openCards.forEach((card) => {
           card.classList.remove('game__card_rotate');
           card.classList.add('game__card_open');
         });
 
-        // set score
-        const currentStepElement = document.querySelector(
-          `#${currentPlayer} .player__step`,
-        );
-
-        currentStepElement.textContent = currentScore;
-        currentStepElement.classList.add('player__step_active');
+        gameEl.currentResult.textContent = currentScore;
+        gameEl.currentResult.classList.add('player__step_active');
         playAudio('./assets/score-sound.mp3');
 
         setTimeout(function () {
-          currentStepElement.classList.remove('player__step_active');
+          gameEl.currentResult.classList.remove('player__step_active');
         }, 2000);
+      } else {
+        playAudio('./assets/fail-sound.mp3');
       }
 
-      gameState.currentPlayer =
-        gameState.currentPlayer === 'player1' ? 'player2' : 'player1';
-      setGameState({
-        currentPlayer: gameState.currentPlayer,
-      });
-
-      // set cards backwards and change player
+      // set cards backwards
       setTimeout(function () {
         // check if all cards are open
         if (
@@ -147,44 +124,15 @@ window.addEventListener('click', function (e) {
             card.classList.contains('game__card_open'),
           )
         ) {
-          players.forEach((player) => player.classList.remove('player_active'));
-
           // set game finished
           gameState.isFinished = true;
-
-          // set final game state
-          setGameState({
-            currentClick: gameState.currentClick,
-            currentCouple: [],
-            couples: gameState.couples,
-            currentPlayer: gameState.currentPlayer,
-            player1: gameState.player1,
-            player2: gameState.player2,
-            steps: gameState.steps,
-            isFinished: gameState.isFinished,
-          });
-
-          const winner =
-            gameState.player1.score === gameState.player2.score
-              ? ''
-              : gameState.player1.score > gameState.player2.score
-                ? 'player1'
-                : 'player2';
-
-          if (winner) {
-            document
-              .querySelector(`#${winner} .player__step`)
-              .classList.add('player__step_active');
-          }
 
           // fix completed game
           const date = new Date();
           const time = setTimeString(date);
           const result = {
-            winner,
-            score: `${player1.score} - ${player2.score}`,
             time,
-            steps,
+            steps: gameState.steps,
           };
 
           // set game finished
@@ -194,21 +142,24 @@ window.addEventListener('click', function (e) {
 
           // set final game state
           setGameState({
-            isFinished: gameState.isFinished,
+            currentClick: gameState.currentClick,
+            currentCouple: [],
+            couples: gameState.couples,
+            steps: gameState.steps,
+            score: gameState.score,
+            isFinished: true,
             games: allGames,
           });
 
           // open modal
           setTimeout(function () {
-            const modal = winnerModal(winner);
+            const modal = winnerModal();
             document.body.prepend(modal);
           }, 600);
         } else {
           cards.forEach((card) => {
             card.classList.remove('game__card_rotate', 'game__card_blocked');
           });
-
-          players.forEach((player) => player.classList.toggle('player_active'));
         }
       }, 1500);
 

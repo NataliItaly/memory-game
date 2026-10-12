@@ -4,15 +4,6 @@ import cardElement from '../components/cardElement.js';
 
 export default function setGame(game) {
   const state = getGameState();
-  const player1El = game.player1;
-  const player2El = game.player2;
-  [player1El, player2El].forEach((player) => {
-    player.querySelector('.player__step').textContent = state[player.id].score;
-
-    state.currentPlayer === player.id
-      ? player.classList.add('player_active')
-      : player.classList.remove('player_active');
-  });
 
   const steps = game.gameSteps;
   steps.textContent = state.steps;
