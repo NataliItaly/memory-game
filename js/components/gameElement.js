@@ -25,11 +25,15 @@ export default function gameElement() {
     { class: 'game__steps', id: 'game-steps' },
     '0',
   );
-  const gameTimer = createElement('div', {
-    class: 'game__timer',
-    id: 'game-timer',
-  });
-  const gameMinutes = createElement(
+  const gameTimer = createElement(
+    'div',
+    {
+      class: 'game__timer',
+      id: 'game-timer',
+    },
+    '00:00',
+  );
+  /* const gameMinutes = createElement(
     'span',
     { class: 'game__minutes', id: 'game-minutes' },
     '00',
@@ -40,7 +44,7 @@ export default function gameElement() {
     { class: 'game__seconds', id: 'game-seconds' },
     '00',
   );
-  gameTimer.append(gameMinutes, colon, gameSeconds);
+  gameTimer.append(gameMinutes, colon, gameSeconds); */
 
   const gameScreen = createElement('div', { class: 'game__screen' });
 
@@ -52,7 +56,8 @@ export default function gameElement() {
     gameSteps,
     currentResult,
     gameScreen,
-    gameMinutes,
-    gameSeconds,
+    gameTimer,
+    /* gameMinutes,
+    gameSeconds, */
   };
 }

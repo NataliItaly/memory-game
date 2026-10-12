@@ -18,6 +18,7 @@ const initialGameState = {
   cardsSequence: [],
   score: 0,
   steps: 0,
+  time: 0,
   isPlaying: false,
   results: [],
   games: [],

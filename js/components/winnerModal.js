@@ -1,5 +1,6 @@
 import createElement from '../utils/createElement.js';
 import { getGameState } from '../states.js';
+import setTimerString from '../utils/setTimeString.js';
 
 export default function winnerModal() {
   const state = getGameState();
@@ -13,10 +14,11 @@ export default function winnerModal() {
     { class: 'modal__steps' },
     `Steps: ${state.steps}`,
   );
+
   const totalTime = createElement(
     'div',
     { class: 'modal__time' },
-    `Steps: ${state.steps}`,
+    setTimerString(state.time),
   );
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
