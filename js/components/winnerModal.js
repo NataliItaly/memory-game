@@ -24,7 +24,7 @@ export default function winnerModal() {
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
   const newGameBtn = createElement(
     'button',
-    { class: 'btn modal__btn init-game-btn' },
+    { class: 'btn modal__btn header__init-game-btn' },
     'New Game',
   );
   const closeBtn = createElement(

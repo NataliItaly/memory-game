@@ -10,6 +10,7 @@ import setGame from './utils/setGame.js';
 import initGame from './utils/initGame.js';
 import winnerTableElement from './components/winnerTableElement.js';
 import setTimeString from './utils/setTimeString.js';
+import { stopTimer } from './utils/timer.js';
 
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
@@ -34,7 +35,7 @@ window.addEventListener('keydown', function (e) {
 });
 
 window.addEventListener('click', function (e) {
-  if (e.target.closest('.init-game-btn')) {
+  if (e.target.closest('.header__init-game-btn')) {
     closeModal();
     initGame(gameEl);
   }
@@ -126,6 +127,7 @@ window.addEventListener('click', function (e) {
         ) {
           // set game finished
           gameState.isFinished = true;
+          stopTimer();
 
           // fix completed game
           const date = new Date();

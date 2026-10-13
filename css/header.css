@@ -1,6 +1,26 @@
-.header {
+.header__upper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 20px;
   padding-bottom: 20px;
+}
+
+.header__low {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.header__init-game-btn {
+  background: linear-gradient(to right, #a2f5f8, #25eef5, #93f5fc);
+}
+
+.header__finish-games_btn {
+  background: linear-gradient(45deg, #fcfa99, #b602a7);
+}
+
+.header__finish-games_btn::after {
+  background: linear-gradient(45deg, #fcfa99, #b602a7);
 }

@@ -5,14 +5,17 @@ export default function savedGamesModal() {
   const state = getGameState();
   const savedGames = state.games;
 
-  if (savedGames <= 0 ) {
+  if (savedGames <= 0) {
     const modal = createElement('div', { class: 'modal' });
-
   }
 
   const modal = createElement('div', { class: 'modal' });
   const modalContent = createElement('div', { class: 'modal__content' });
-  const title = createElement('h3', { class: 'modal__title' }, 'Your saved games');
+  const title = createElement(
+    'h3',
+    { class: 'modal__title' },
+    'Your saved games',
+  );
   const subtitle = createElement('p', { class: 'modal__subtitle' }, scoreText);
   const totalSteps = createElement(
     'div',
@@ -23,7 +26,7 @@ export default function savedGamesModal() {
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
   const newGameBtn = createElement(
     'button',
-    { class: 'btn modal__btn init-game-btn' },
+    { class: 'btn modal__btn header__init-game-btn' },
     'New Game',
   );
   const closeBtn = createElement(
