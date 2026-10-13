@@ -12,7 +12,8 @@ import winnerTableElement from './components/winnerTableElement.js';
 import setTimeString from './utils/setTimeString.js';
 import { startTimer, stopTimer } from './utils/timer.js';
 import generateCards from './utils/generateCards.js';
-import { finishGameConfirmModal } from './components/finishGameConfirmModal.js';
+import finishGameConfirmModal from './components/finishGameConfirmModal.js';
+import pauseGameConfirmModal from './components/pauseGameConfirmModal.js';
 
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
@@ -58,13 +59,35 @@ window.addEventListener('click', function (e) {
     document.body.prepend(winnerTableEl);
   }
 
+  if (e.target.closest('#save-game-btn')) {
+    stopTimer();
+    resetGameState();
+    generateCards();
+    setGame(gameEl);
+  }
+
+  if (e.target.closest('#pause-game-btn')) {
+    const confirmModal = pauseGameConfirmModal();
+    this.document.body.prepend(confirmModal);
+  }
+
+  if (e.target.closest('#confirm-pause-btn')) {
+    const currentGame = structuredClone(state);
+    currentGame.currentClick = 2;
+    currentGame.currentCouple = [];
+    currentGame.isPlaying = false;
+
+    stopTimer();
+    resetGameState();
+    setGameState({ savedGames: [...getGameState().savedGames, currentGame] });
+
+    generateCards();
+    setGame(gameEl);
+  }
+
   if (e.target.closest('#finish-game-btn')) {
     const confirmModal = finishGameConfirmModal();
     this.document.body.prepend(confirmModal);
-    /* stopTimer();
-    resetGameState();
-    generateCards();
-    setGame(gameEl); */
   }
 
   if (e.target.closest('#confirm-btn')) {

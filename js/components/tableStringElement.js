@@ -6,7 +6,6 @@ export default function tableStringElement(obj, i) {
   const placeSpan = createElement('span', {}, `${i + 1}`);
   string.append(placeSpan);
   for (let key in obj) {
-    if (obj[key] === '') obj[key] = 'Draw';
     const span = createElement('span', {}, obj[key]);
     string.append(span);
   }

@@ -22,6 +22,7 @@ const initialGameState = {
   isPlaying: false,
   results: [],
   games: [],
+  savedGames: [],
 };
 
 let gameState;
@@ -51,7 +52,9 @@ export function setGameState(obj) {
 
 export function resetGameState() {
   const games = getGameState().games;
+  const savedGames = getGameState().savedGames;
+
   setGameState(structuredClone(initialGameState));
-  setGameState({ games });
+  setGameState({ games, savedGames });
   console.log('reset', getGameState().time);
 }

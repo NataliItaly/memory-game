@@ -22,6 +22,10 @@
   background: #0c051a;
 }
 
+.modal__title {
+  text-align: center;
+}
+
 .modal__buttons {
   display: flex;
   justify-content: center;

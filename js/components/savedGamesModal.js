@@ -5,16 +5,18 @@ export default function savedGamesModal() {
   const state = getGameState();
   const savedGames = state.games;
 
-  if (savedGames <= 0) {
-    const modal = createElement('div', { class: 'modal' });
-  }
-
   const modal = createElement('div', { class: 'modal' });
   const modalContent = createElement('div', { class: 'modal__content' });
   const title = createElement(
     'h3',
     { class: 'modal__title' },
     'Your saved games',
+  );
+
+  const message = createElement(
+    'div',
+    { class: 'modal__message' },
+    "You don't have any saved games yet",
   );
   const subtitle = createElement('p', { class: 'modal__subtitle' }, scoreText);
   const totalSteps = createElement(
@@ -34,9 +36,14 @@ export default function savedGamesModal() {
     { class: 'btn modal__close' },
     'Close',
   );
-
   buttonsWrapper.append(newGameBtn, closeBtn);
-  modalContent.append(title, subtitle, totalSteps, buttonsWrapper);
+
+  if (savedGames <= 0) {
+    modalContent.append(title, message, buttonsWrapper);
+  } else {
+    modalContent.append(title, subtitle, totalSteps, buttonsWrapper);
+  }
+
   modal.append(modalContent);
   return modal;
 }

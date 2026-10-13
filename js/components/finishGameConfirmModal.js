@@ -1,6 +1,6 @@
 import createElement from '../utils/createElement.js';
 
-export function finishGameConfirmModal() {
+export default function finishGameConfirmModal() {
   const modal = createElement('div', { class: 'modal' });
   const modalContent = createElement('div', { class: 'modal__content' });
   const title = createElement(
