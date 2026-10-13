@@ -2,7 +2,7 @@ import createElement from './utils/createElement.js';
 import videoElement from './components/videoElement.js';
 import gameElement from './components/gameElement.js';
 import headerElement from './components/headerElement.js';
-import { getGameState, setGameState } from './states.js';
+import { getGameState, resetGameState, setGameState } from './states.js';
 import playAudio from './utils/playAudio.js';
 import winnerModal from './components/winnerModal.js';
 import closeModal from './utils/closeModal.js';
@@ -11,6 +11,8 @@ import initGame from './utils/initGame.js';
 import winnerTableElement from './components/winnerTableElement.js';
 import setTimeString from './utils/setTimeString.js';
 import { startTimer, stopTimer } from './utils/timer.js';
+import generateCards from './utils/generateCards.js';
+import { finishGameConfirmModal } from './components/finishGameConfirmModal.js';
 
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
@@ -54,6 +56,22 @@ window.addEventListener('click', function (e) {
   if (e.target.closest('.header__score_btn')) {
     const winnerTableEl = winnerTableElement();
     document.body.prepend(winnerTableEl);
+  }
+
+  if (e.target.closest('#finish-game-btn')) {
+    const confirmModal = finishGameConfirmModal();
+    this.document.body.prepend(confirmModal);
+    /* stopTimer();
+    resetGameState();
+    generateCards();
+    setGame(gameEl); */
+  }
+
+  if (e.target.closest('#confirm-btn')) {
+    stopTimer();
+    resetGameState();
+    generateCards();
+    setGame(gameEl);
   }
 
   if (e.target.closest('.game__card')) {
