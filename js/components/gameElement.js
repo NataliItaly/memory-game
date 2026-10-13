@@ -1,5 +1,6 @@
 import createElement from '../utils/createElement.js';
 import { getGameState, cardsNumber } from '../states.js';
+import getTimerString from '../utils/getTimerString.js';
 
 export default function gameElement() {
   const gameState = getGameState();
@@ -31,20 +32,8 @@ export default function gameElement() {
       class: 'game__timer',
       id: 'game-timer',
     },
-    '00:00',
+    getTimerString(gameState.time),
   );
-  /* const gameMinutes = createElement(
-    'span',
-    { class: 'game__minutes', id: 'game-minutes' },
-    '00',
-  );
-  const colon = createElement('span', {}, ':');
-  const gameSeconds = createElement(
-    'span',
-    { class: 'game__seconds', id: 'game-seconds' },
-    '00',
-  );
-  gameTimer.append(gameMinutes, colon, gameSeconds); */
 
   const gameScreen = createElement('div', { class: 'game__screen' });
 

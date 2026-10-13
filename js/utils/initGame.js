@@ -8,7 +8,7 @@ export default function initGame(game) {
   resetGameState();
   generateCards(); // cards sequence is created here
 
-  startTimer(game);
+  //startTimer(game);
 
   setGame(game);
 }

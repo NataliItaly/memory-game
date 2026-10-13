@@ -10,7 +10,7 @@ import setGame from './utils/setGame.js';
 import initGame from './utils/initGame.js';
 import winnerTableElement from './components/winnerTableElement.js';
 import setTimeString from './utils/setTimeString.js';
-import { stopTimer } from './utils/timer.js';
+import { startTimer, stopTimer } from './utils/timer.js';
 
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
@@ -57,49 +57,54 @@ window.addEventListener('click', function (e) {
   }
 
   if (e.target.closest('.game__card')) {
+    // check if it's first turned card
+    if (
+      state.currentCouple.length === 0 &&
+      state.steps === 0 &&
+      state.isPlaying === false
+    ) {
+      setGameState({ isPlaying: true });
+      startTimer(gameEl);
+    }
+
     const currentCard = e.target.closest('.game__card');
     currentCard.classList.add('game__card_rotate');
 
-    const gameState = getGameState();
-
     const currentCardId = currentCard.dataset.id;
 
-    if (gameState.currentClick > 0) {
-      gameState.currentCouple = [
-        ...getGameState().currentCouple,
-        currentCardId,
-      ];
-      gameState.currentClick -= 1;
+    if (state.currentClick > 0) {
+      state.currentCouple = [...getGameState().currentCouple, currentCardId];
+      state.currentClick -= 1;
 
       setGameState({
-        currentClick: gameState.currentClick,
-        currentCouple: gameState.currentCouple,
+        currentClick: state.currentClick,
+        currentCouple: state.currentCouple,
       });
     }
 
-    if (gameState.currentClick === 0) {
+    if (state.currentClick === 0) {
       // increase steps count
-      gameState.steps += 1;
-      setGameState({ steps: gameState.steps, currentClick: 2 });
-      gameEl.gameSteps.textContent = gameState.steps;
+      state.steps += 1;
+      setGameState({ steps: state.steps, currentClick: 2 });
+      gameEl.gameSteps.textContent = state.steps;
 
       // block all the cards except opened
       const cards = gameEl.gameScreen.querySelectorAll('.game__card');
       cards.forEach((card) => card.classList.add('game__card_blocked'));
 
       // check if 2 last clicks was successful
-      if (gameState.currentCouple[0] === gameState.currentCouple[1]) {
-        const currentScore = gameState.score + 1;
-        gameState.couples = [...gameState.couples, currentCardId];
+      if (state.currentCouple[0] === state.currentCouple[1]) {
+        const currentScore = state.score + 1;
+        state.couples = [...state.couples, currentCardId];
 
         setGameState({
-          couples: gameState.couples,
+          couples: state.couples,
           score: currentScore,
         });
 
         // set guessed card as open
         const openCards = gameEl.gameScreen.querySelectorAll(
-          `.game__card[data-id="${gameState.currentCouple[0]}"]`,
+          `.game__card[data-id="${state.currentCouple[0]}"]`,
         );
         openCards.forEach((card) => {
           card.classList.remove('game__card_rotate');
@@ -126,7 +131,7 @@ window.addEventListener('click', function (e) {
           )
         ) {
           // set game finished
-          gameState.isFinished = true;
+          state.isFinished = true;
           stopTimer();
 
           // fix completed game
@@ -134,23 +139,24 @@ window.addEventListener('click', function (e) {
           const time = setTimeString(date);
           const result = {
             time,
-            steps: gameState.steps,
+            steps: state.steps,
           };
 
           // set game finished
-          gameState.isFinished = true;
+          state.isFinished = true;
 
-          const allGames = [...gameState.games, result];
+          const allGames = [...state.games, result];
 
           // set final game state
           setGameState({
-            currentClick: gameState.currentClick,
+            currentClick: state.currentClick,
             currentCouple: [],
-            couples: gameState.couples,
-            steps: gameState.steps,
-            score: gameState.score,
+            couples: state.couples,
+            steps: state.steps,
+            score: state.score,
             isFinished: true,
             games: allGames,
+            isPlaying: false,
           });
 
           // open modal

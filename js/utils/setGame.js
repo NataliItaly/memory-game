@@ -1,12 +1,19 @@
 import { getGameState, resetGameState, setGameState } from '../states.js';
 import shuffleArr from './shuffleArray.js';
 import cardElement from '../components/cardElement.js';
+import getTimerString from './getTimerString.js';
 
 export default function setGame(game) {
   const state = getGameState();
 
   const steps = game.gameSteps;
   steps.textContent = state.steps;
+
+  const currentResult = game.currentResult;
+  currentResult.textContent = state.score;
+
+  const timer = game.gameTimer;
+  timer.textContent = getTimerString(state.time);
 
   const gameScreen = game.gameScreen;
   const cards = gameScreen.querySelectorAll('.game__card');
