@@ -47,9 +47,18 @@
   gap: 20px;
 }
 
+.modal__table-header {
+  display: grid;
+  grid-template-columns: 150px repeat(2, 1fr) 100px;
+  gap: 20px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: #14082c;
+}
+
 .modal__string {
   display: grid;
-  grid-template-columns: 30px 100px repeat(3, 1fr);
+  grid-template-columns: 30px 100px repeat(2, 1fr) 100px;
   gap: 20px;
   padding: 5px 10px;
   border-radius: 10px;

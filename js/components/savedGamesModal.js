@@ -1,9 +1,11 @@
 import createElement from '../utils/createElement.js';
 import { getGameState } from '../states.js';
+import tableStringElement from './tableStringElement.js';
+import tableHeaderEl from './tableHeaderEl.js';
 
 export default function savedGamesModal() {
   const state = getGameState();
-  const savedGames = state.games;
+  const savedGames = state.savedGames;
 
   const modal = createElement('div', { class: 'modal' });
   const modalContent = createElement('div', { class: 'modal__content' });
@@ -18,30 +20,26 @@ export default function savedGamesModal() {
     { class: 'modal__message' },
     "You don't have any saved games yet",
   );
-  const subtitle = createElement('p', { class: 'modal__subtitle' }, scoreText);
-  const totalSteps = createElement(
-    'div',
-    { class: 'modal__steps' },
-    `Steps: ${state.steps}`,
+
+  const gamesTable = createElement('div', { class: 'modal__table' });
+  const header = tableHeaderEl(savedGames[0]);
+  gamesTable.append(header);
+  savedGames.forEach((game, i) =>
+    gamesTable.append(tableStringElement(game, i)),
   );
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
-  const newGameBtn = createElement(
-    'button',
-    { class: 'btn modal__btn header__init-game-btn' },
-    'New Game',
-  );
   const closeBtn = createElement(
     'button',
     { class: 'btn modal__close' },
     'Close',
   );
-  buttonsWrapper.append(newGameBtn, closeBtn);
+  buttonsWrapper.append(closeBtn);
 
   if (savedGames <= 0) {
     modalContent.append(title, message, buttonsWrapper);
   } else {
-    modalContent.append(title, subtitle, totalSteps, buttonsWrapper);
+    modalContent.append(title, gamesTable, buttonsWrapper);
   }
 
   modal.append(modalContent);

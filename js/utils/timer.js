@@ -2,7 +2,7 @@ import { getGameState, setGameState } from '../states.js';
 import getTimerString from './getTimerString.js';
 
 let gameInterval = null;
-let startTime = 0;
+let startTime = getGameState().time || 0;
 
 export function startTimer(game) {
   stopTimer();

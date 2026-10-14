@@ -12,7 +12,7 @@ export default function pauseGameConfirmModal() {
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });
   const confirmBtn = createElement(
     'button',
-    { class: 'btn modal__btn header__init-game-btn', id: 'confirm-pause-btn' },
+    { class: 'btn modal__btn', id: 'confirm-pause-btn' },
     'Yes',
   );
   const rejectBtn = createElement(

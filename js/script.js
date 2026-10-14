@@ -14,19 +14,24 @@ import { startTimer, stopTimer } from './utils/timer.js';
 import generateCards from './utils/generateCards.js';
 import finishGameConfirmModal from './components/finishGameConfirmModal.js';
 import pauseGameConfirmModal from './components/pauseGameConfirmModal.js';
+import savedGamesModal from './components/savedGamesModal.js';
 
 const containerEl = createElement('div', { class: 'container' });
 const headerEl = headerElement();
 const gameEl = gameElement();
 const videoEl = videoElement();
-console.log(gameEl);
+
 containerEl.append(headerEl, gameEl.game);
 document.body.prepend(videoEl, containerEl);
 
 const state = getGameState();
-console.log(state.cardsSequence);
+console.log('initial sequence', state.cardsSequence);
 if (state.cardsSequence.length > 0) {
   setGame(gameEl);
+
+  if (state.isPlaying) {
+    startTimer(gameEl);
+  }
 } else {
   initGame(gameEl);
 }
@@ -59,35 +64,60 @@ window.addEventListener('click', function (e) {
     document.body.prepend(winnerTableEl);
   }
 
-  if (e.target.closest('#save-game-btn')) {
-    stopTimer();
-    resetGameState();
-    generateCards();
-    setGame(gameEl);
-  }
-
   if (e.target.closest('#pause-game-btn')) {
     const confirmModal = pauseGameConfirmModal();
-    this.document.body.prepend(confirmModal);
+    document.body.prepend(confirmModal);
+    const currentState = getGameState();
+    console.log('current state when press pause', currentState);
+    const couples = [...currentState.couples];
+    const cardsSequence = [...currentState.cardsSequence];
+    console.log('couples', couples);
+    console.log('cardsSequence', cardsSequence);
   }
 
   if (e.target.closest('#confirm-pause-btn')) {
-    const currentGame = structuredClone(state);
-    currentGame.currentClick = 2;
-    currentGame.currentCouple = [];
-    currentGame.isPlaying = false;
+    const currentState = getGameState();
+    console.log('current state', currentState);
+    const couples = [...currentState.couples];
+    const cardsSequence = [...currentState.cardsSequence];
+    const score = currentState.score;
+    const steps = currentState.steps;
+    const time = currentState.time;
+    console.log('couples', couples);
+    console.log('cardsSequence', cardsSequence);
 
+    const gameForSave = {
+      couples,
+      cardsSequence,
+      score,
+      steps,
+      time,
+    };
+    console.log('gameForSave', gameForSave);
     stopTimer();
-    resetGameState();
-    setGameState({ savedGames: [...getGameState().savedGames, currentGame] });
 
+    // defensive check if localStorage doesn't have savedGames property
+    const savedGames = Array.isArray(currentState.savedGames)
+      ? currentState.savedGames
+      : [];
+
+    setGameState({ savedGames: [...savedGames, gameForSave] });
+    resetGameState();
+
+    // display screen with new cards sequence for a new game
     generateCards();
     setGame(gameEl);
+    closeModal();
+  }
+
+  if (e.target.closest('#saved-table-btn')) {
+    const savedTableEl = savedGamesModal();
+    document.body.prepend(savedTableEl);
   }
 
   if (e.target.closest('#finish-game-btn')) {
     const confirmModal = finishGameConfirmModal();
-    this.document.body.prepend(confirmModal);
+    document.body.prepend(confirmModal);
   }
 
   if (e.target.closest('#confirm-btn')) {
@@ -98,11 +128,13 @@ window.addEventListener('click', function (e) {
   }
 
   if (e.target.closest('.game__card')) {
+    const currentState = getGameState();
+    console.log('sequence after click on card', getGameState().cardsSequence);
     // check if it's first turned card
     if (
-      state.currentCouple.length === 0 &&
-      state.steps === 0 &&
-      state.isPlaying === false
+      currentState.currentCouple.length === 0 &&
+      currentState.steps === 0 &&
+      currentState.isPlaying === false
     ) {
       setGameState({ isPlaying: true });
       startTimer(gameEl);
@@ -113,33 +145,36 @@ window.addEventListener('click', function (e) {
 
     const currentCardId = currentCard.dataset.id;
 
-    if (state.currentClick > 0) {
-      state.currentCouple = [...getGameState().currentCouple, currentCardId];
-      state.currentClick -= 1;
+    if (currentState.currentClick > 0) {
+      currentState.currentCouple = [
+        ...getGameState().currentCouple,
+        currentCardId,
+      ];
+      currentState.currentClick -= 1;
 
       setGameState({
-        currentClick: state.currentClick,
-        currentCouple: state.currentCouple,
+        currentClick: currentState.currentClick,
+        currentCouple: currentState.currentCouple,
       });
     }
 
-    if (state.currentClick === 0) {
+    if (currentState.currentClick === 0) {
       // increase steps count
-      state.steps += 1;
-      setGameState({ steps: state.steps, currentClick: 2 });
-      gameEl.gameSteps.textContent = state.steps;
+      currentState.steps += 1;
+      setGameState({ steps: currentState.steps, currentClick: 2 });
+      gameEl.gameSteps.textContent = currentState.steps;
 
       // block all the cards except opened
       const cards = gameEl.gameScreen.querySelectorAll('.game__card');
       cards.forEach((card) => card.classList.add('game__card_blocked'));
 
       // check if 2 last clicks was successful
-      if (state.currentCouple[0] === state.currentCouple[1]) {
-        const currentScore = state.score + 1;
-        state.couples = [...state.couples, currentCardId];
+      if (currentState.currentCouple[0] === state.currentCouple[1]) {
+        const currentScore = currentState.score + 1;
+        currentState.couples = [...currentState.couples, currentCardId];
 
         setGameState({
-          couples: state.couples,
+          couples: currentState.couples,
           score: currentScore,
         });
 
@@ -172,7 +207,7 @@ window.addEventListener('click', function (e) {
           )
         ) {
           // set game finished
-          state.isFinished = true;
+          currentState.isFinished = true;
           stopTimer();
 
           // fix completed game
@@ -180,21 +215,21 @@ window.addEventListener('click', function (e) {
           const time = setTimeString(date);
           const result = {
             time,
-            steps: state.steps,
+            steps: currentState.steps,
           };
 
           // set game finished
-          state.isFinished = true;
+          currentState.isFinished = true;
 
-          const allGames = [...state.games, result];
+          const allGames = [...currentState.games, result];
 
           // set final game state
           setGameState({
             currentClick: state.currentClick,
             currentCouple: [],
-            couples: state.couples,
-            steps: state.steps,
-            score: state.score,
+            couples: currentState.couples,
+            steps: currentState.steps,
+            score: currentState.score,
             isFinished: true,
             games: allGames,
             isPlaying: false,
