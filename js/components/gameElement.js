@@ -1,30 +1,50 @@
 import createElement from '../utils/createElement.js';
-import generateCards from '../utils/generateCards.js';
-import playerElement from './playerElement.js';
+import { getGameState, cardsNumber } from '../states.js';
+import getTimerString from '../utils/getTimerString.js';
 
 export default function gameElement() {
+  const gameState = getGameState();
   const game = createElement('div', { class: 'game' });
   const gameHeader = createElement('div', { class: 'game__header' });
-  const player1 = playerElement(1);
-  const player2 = playerElement(2);
+
+  const currentResult = createElement(
+    'span',
+    { class: 'game__result_current' },
+    `${gameState.score}`,
+  );
+  const span = createElement('span', { class: 'game__result_span' }, '/');
+  const totalResult = createElement(
+    'span',
+    { class: 'game__result_total' },
+    `${cardsNumber / 2}`,
+  );
+  const gameResult = createElement('div', { class: 'game__result' });
+  gameResult.append(currentResult, span, totalResult);
+
   const gameSteps = createElement(
     'div',
     { class: 'game__steps', id: 'game-steps' },
     '0',
   );
+  const gameTimer = createElement(
+    'div',
+    {
+      class: 'game__timer',
+      id: 'game-timer',
+    },
+    getTimerString(gameState.time),
+  );
+
   const gameScreen = createElement('div', { class: 'game__screen' });
 
-  /* const cards = generateCards();
-  cards.forEach((card) => gameScreen.append(card));
- */
-  gameHeader.append(player1, gameSteps, player2);
+  gameHeader.append(gameSteps, gameResult, gameTimer);
   game.append(gameHeader, gameScreen);
 
   return {
     game,
     gameSteps,
-    player1,
-    player2,
+    currentResult,
     gameScreen,
+    gameTimer
   };
 }

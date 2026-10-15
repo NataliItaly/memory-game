@@ -25,6 +25,7 @@ body {
 
 h1 {
   font-size: 28px;
+  margin: 0 auto;
 }
 
 .container {
@@ -60,8 +61,11 @@ h1 {
   color: #000;
   background: linear-gradient(45deg, #f874d0, #19f6c7);
   font-family: 'Press Start 2P', system-ui;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
-  padding: 10px 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.5s;
@@ -91,11 +95,11 @@ h1 {
 }
 
 .btn_variant {
-  background: linear-gradient(45deg, yellow, orangered);
+  background: linear-gradient(45deg, #c3fa41, #ff0094);
 }
 
 .btn_variant::after {
-  background: linear-gradient(45deg, yellow, orangered);
+  background: linear-gradient(45deg, #c3fa41, #ff0094);
 }
 
 @keyframes button-slide {
