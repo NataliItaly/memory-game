@@ -3,6 +3,10 @@
 RS School vanilla JS task
 [Task](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/memory-game)
 
+
+## Deploy [link](https://nataliitaly.github.io/memory-game/)
+
+
 ## Description
 
 A browser-based memory card game built with HTML, CSS, and vanilla JavaScript. The goal is to find all 8 matching pairs among 16 shuffled cards in as few moves as possible.
@@ -37,3 +41,22 @@ No additional installation or build commands are required.
 - HTML5
 - CSS3
 - JavaScript (Vanilla JS)
+
+## Screenshot 
+
+Game Screen
+
+<img width="1182" height="617" alt="Screenshot 2026-10-07 012358" src="https://github.com/user-attachments/assets/201010eb-3ade-468c-8541-fa305d2bd692" />
+
+
+Win Modal
+
+<img width="1156" height="366" alt="Screenshot 2026-10-07 011621" src="https://github.com/user-attachments/assets/c2eac476-c656-4f95-a579-1560a7e02b2d" />
+
+
+Winners Table
+
+<img width="1241" height="477" alt="Screenshot 2026-10-07 011909" src="https://github.com/user-attachments/assets/1d81b819-a786-407a-940d-49a425718d3a" />
+
+
+
