@@ -85,6 +85,7 @@ window.addEventListener('click', function (e) {
     const time = currentState.time;
     console.log('couples', couples);
     console.log('cardsSequence', cardsSequence);
+    const id = crypto.randomUUID();
 
     const gameForSave = {
       couples,
@@ -92,6 +93,7 @@ window.addEventListener('click', function (e) {
       score,
       steps,
       time,
+      id,
     };
     console.log('gameForSave', gameForSave);
     stopTimer();
@@ -113,6 +115,67 @@ window.addEventListener('click', function (e) {
   if (e.target.closest('#saved-table-btn')) {
     const savedTableEl = savedGamesModal();
     document.body.prepend(savedTableEl);
+  }
+
+  // resume saved game
+  if (e.target.classList.contains('modal__resume-game-btn')) {
+    console.log(e.target);
+    const state = getGameState();
+    const currentBtn = e.target; //.closest('.modal__span-btn');
+    console.log('btn id', currentBtn);
+
+    const currentId = currentBtn.id.split('-').slice(1).join('-');
+
+    console.log('id', currentId);
+    const currentGame = state.savedGames.find((game) => game.id === currentId);
+    console.log('saved game', state.savedGames);
+    console.log('current game', currentGame);
+    const stateToApply = {
+      currentClick: 2,
+      currentCouple: [],
+      couples: currentGame.couples,
+      cardsSequence: currentGame.cardsSequence,
+      score: currentGame.score,
+      steps: currentGame.steps,
+      time: currentGame.time,
+      isPlaying: true,
+      games: structuredClone(state.games),
+      savedGames: structuredClone(state.savedGames),
+    };
+    //state.savedGames.filter((g) => g.id !== currentGame.id
+    setGameState(stateToApply);
+    setGame(gameEl);
+
+    closeModal();
+  }
+
+  // delete saved game
+  if (e.target.classList.contains('modal__delete-game-btn')) {
+    console.log(e.target);
+    const state = getGameState();
+    const currentBtn = e.target;
+    console.log('btn id', currentBtn);
+
+    const currentId = currentBtn.id.split('-').slice(1).join('-');
+
+    console.log('id', currentId);
+    //const currentGame = state.savedGames.find((game) => game.id === currentId);
+    //console.log('saved game', state.savedGames);
+    //console.log('current game', currentGame);
+
+    setGameState({
+      savedGames: structuredClone(
+        state.savedGames.filter((g) => g.id !== currentId),
+      ),
+    });
+
+    const modal = document.getElementById('saved-table');
+    modal.remove();
+
+    const savedTableEl = savedGamesModal();
+    document.body.prepend(savedTableEl);
+
+    initGame(gameEl);
   }
 
   if (e.target.closest('#finish-game-btn')) {

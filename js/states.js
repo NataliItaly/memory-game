@@ -20,7 +20,6 @@ const initialGameState = {
   steps: 0,
   time: 0,
   isPlaying: false,
-  results: [],
   games: [],
   savedGames: [],
 };

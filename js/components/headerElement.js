@@ -33,7 +33,10 @@ export default function headerElement() {
 
   const stopGameBtn = createElement(
     'button',
-    { class: 'btn header__finish-games_btn', id: 'finish-game-btn' },
+    {
+      class: 'btn btn_variant header__finish-games_btn',
+      id: 'finish-game-btn',
+    },
     'Finish Game',
   );
 

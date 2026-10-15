@@ -7,7 +7,7 @@ export default function savedGamesModal() {
   const state = getGameState();
   const savedGames = state.savedGames;
 
-  const modal = createElement('div', { class: 'modal' });
+  const modal = createElement('div', { class: 'modal', id: 'saved-table' });
   const modalContent = createElement('div', { class: 'modal__content' });
   const title = createElement(
     'h3',
@@ -25,7 +25,7 @@ export default function savedGamesModal() {
   const header = tableHeaderEl(savedGames[0]);
   gamesTable.append(header);
   savedGames.forEach((game, i) =>
-    gamesTable.append(tableStringElement(game, i)),
+    gamesTable.append(tableStringElement(game, i, 'saved')),
   );
 
   const buttonsWrapper = createElement('div', { class: 'modal__buttons' });

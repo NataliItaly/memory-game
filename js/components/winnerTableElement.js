@@ -1,6 +1,7 @@
 import createElement from '../utils/createElement.js';
 import { getGameState } from '../states.js';
 import tableStringElement from './tableStringElement.js';
+import tableHeaderEl from './tableHeaderEl.js';
 
 export default function winnerTableElement() {
   const games = getGameState().games;
@@ -20,6 +21,8 @@ export default function winnerTableElement() {
   });
   const title = createElement('h3', { class: 'modal__title' }, 'Winners');
   const tableText = createElement('div', { class: 'modal__text' });
+  const header = tableHeaderEl(sortedGames[0]);
+  tableText.append(header);
 
   sortedGames
     .slice(0, 10)

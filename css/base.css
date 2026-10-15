@@ -95,11 +95,11 @@ h1 {
 }
 
 .btn_variant {
-  background: linear-gradient(45deg, yellow, orangered);
+  background: linear-gradient(45deg, #c3fa41, #ff0094);
 }
 
 .btn_variant::after {
-  background: linear-gradient(45deg, yellow, orangered);
+  background: linear-gradient(45deg, #c3fa41, #ff0094);
 }
 
 @keyframes button-slide {

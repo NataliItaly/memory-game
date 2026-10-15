@@ -12,7 +12,7 @@
 }
 
 .modal__content {
-  max-width: 500px;
+  max-width: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,6 +24,12 @@
 
 .modal__title {
   text-align: center;
+}
+
+.modal__table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .modal__buttons {
@@ -49,16 +55,20 @@
 
 .modal__table-header {
   display: grid;
-  grid-template-columns: 150px repeat(2, 1fr) 100px;
+  grid-template-columns: 30px 100px 70px 100px 70px;
   gap: 20px;
   padding: 5px 10px;
   border-radius: 10px;
   background: #14082c;
 }
 
+.modal__table-header span {
+  text-align: center;
+}
+
 .modal__string {
   display: grid;
-  grid-template-columns: 30px 100px repeat(2, 1fr) 100px;
+  grid-template-columns: 30px 100px 70px 100px 70px 70px;
   gap: 20px;
   padding: 5px 10px;
   border-radius: 10px;
@@ -76,4 +86,9 @@
 
 .modal__string span:nth-of-type(4) {
   font-family: 'Courier New', Courier, monospace;
+}
+
+.modal__span-btn {
+  font-size: 11px;
+  padding: 5px 17px;
 }
