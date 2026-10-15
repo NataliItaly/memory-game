@@ -16,16 +16,12 @@ const initialGameState = {
   currentCouple: [],
   couples: [],
   cardsSequence: [],
-  currentPlayer: 'player1',
-  player1: {
-    score: 0,
-  },
-  player2: {
-    score: 0,
-  },
+  score: 0,
   steps: 0,
-  isFinished: false,
+  time: 0,
+  isPlaying: false,
   games: [],
+  savedGames: [],
 };
 
 let gameState;
@@ -54,7 +50,9 @@ export function setGameState(obj) {
 }
 
 export function resetGameState() {
-  const games = getGameState().games;
+  const games = structuredClone(getGameState().games);
+  const savedGames = structuredClone(getGameState().savedGames);
+
   setGameState(structuredClone(initialGameState));
-  setGameState({ games });
+  setGameState({ games, savedGames });
 }
