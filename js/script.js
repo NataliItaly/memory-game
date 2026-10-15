@@ -26,7 +26,7 @@ document.body.prepend(videoEl, containerEl);
 
 let startTime = getGameState().time || 0;
 const state = getGameState();
-console.log('initial sequence', state.cardsSequence);
+
 if (state.cardsSequence.length > 0) {
   setGame(gameEl);
 
@@ -78,16 +78,10 @@ window.addEventListener('click', function (e) {
 
     const currentState = getGameState();
     stopTimer(currentState.time);
-    /*console.log('current state when press pause', currentState);
-    const couples = [...currentState.couples];
-    const cardsSequence = [...currentState.cardsSequence];
-    console.log('couples', couples);
-    console.log('cardsSequence', cardsSequence); */
   }
 
   if (e.target.closest('#confirm-pause-btn')) {
     const currentState = getGameState();
-    console.log('current state', currentState);
     const couples = [...currentState.couples];
     const cardsSequence = [...currentState.cardsSequence];
     const score = currentState.score;
@@ -104,8 +98,6 @@ window.addEventListener('click', function (e) {
       time,
       id,
     };
-    console.log('gameForSave', gameForSave);
-    //stopTimer();
 
     // defensive check if localStorage doesn't have savedGames property
     const savedGames = Array.isArray(currentState.savedGames)
@@ -130,17 +122,12 @@ window.addEventListener('click', function (e) {
 
   // resume saved game
   if (e.target.classList.contains('modal__resume-game-btn')) {
-    console.log(e.target);
     const state = getGameState();
-    const currentBtn = e.target; //.closest('.modal__span-btn');
-    console.log('btn id', currentBtn);
-
+    const currentBtn = e.target;
     const currentId = currentBtn.id.split('-').slice(1).join('-');
 
-    console.log('id', currentId);
     const currentGame = state.savedGames.find((game) => game.id === currentId);
-    console.log('saved game', state.savedGames);
-    console.log('current game', currentGame);
+
     const stateToApply = {
       currentClick: 2,
       currentCouple: [],
@@ -162,17 +149,10 @@ window.addEventListener('click', function (e) {
 
   // delete saved game
   if (e.target.classList.contains('modal__delete-game-btn')) {
-    console.log(e.target);
     const state = getGameState();
     const currentBtn = e.target;
-    console.log('btn id', currentBtn);
 
     const currentId = currentBtn.id.split('-').slice(1).join('-');
-
-    console.log('id', currentId);
-    //const currentGame = state.savedGames.find((game) => game.id === currentId);
-    //console.log('saved game', state.savedGames);
-    //console.log('current game', currentGame);
 
     setGameState({
       savedGames: structuredClone(
@@ -198,15 +178,11 @@ window.addEventListener('click', function (e) {
     startTime = 0;
     //stopTimer(0);
     initGame(gameEl);
-    /* resetGameState();
-    generateCards();
-    setGame(gameEl); */
   }
 
   if (e.target.closest('.game__card')) {
     const currentState = getGameState();
-    console.log(currentState.time);
-    console.log('sequence after click on card', getGameState().cardsSequence);
+
     // check if it's first turned card
     if (
       currentState.currentCouple.length === 0 &&
@@ -289,7 +265,6 @@ window.addEventListener('click', function (e) {
 
           // fix completed game
           const date = setTimeString(new Date());
-          console.log('date', date);
           const result = {
             date,
             steps: currentState.steps,

@@ -45,8 +45,6 @@ export default function gameElement() {
     gameSteps,
     currentResult,
     gameScreen,
-    gameTimer,
-    /* gameMinutes,
-    gameSeconds, */
+    gameTimer
   };
 }

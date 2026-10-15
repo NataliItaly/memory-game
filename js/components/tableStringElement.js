@@ -8,7 +8,6 @@ export default function tableStringElement(obj, i, type = '') {
   string.append(placeSpan);
   for (let key in obj) {
     if (key !== 'cardsSequence' && key !== 'couples' && key !== 'id') {
-      console.log('key, obj[key]', key, obj[key]);
       const spanText = key === 'time' ? getTimerString(obj[key]) : obj[key];
       const span = createElement('span', {}, `${spanText}`);
       string.append(span);

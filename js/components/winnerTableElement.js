@@ -8,7 +8,6 @@ export default function winnerTableElement() {
   const sortedGames = [...games]
     .map((game) => structuredClone(game))
     .sort((a, b) => a.steps - b.steps);
-  console.log(sortedGames);
 
   const info = createElement(
     'div',
