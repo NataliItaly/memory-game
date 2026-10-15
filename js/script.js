@@ -274,11 +274,12 @@ window.addEventListener('click', function (e) {
           stopTimer();
 
           // fix completed game
-          const date = new Date();
-          const time = setTimeString(date);
+          const date = setTimeString(new Date());
+          console.log('date', date);
           const result = {
-            time,
+            date,
             steps: currentState.steps,
+            time: currentState.time,
           };
 
           // set game finished
