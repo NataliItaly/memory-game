@@ -5,9 +5,23 @@ RS School vanilla JS task
 
 ## Description
 
-A simple **Memory Game** built with vanilla JavaScript, HTML, and CSS.
+A browser-based memory card game built with HTML, CSS, and vanilla JavaScript. The goal is to find all 8 matching pairs among 16 shuffled cards in as few moves as possible.
 
-The goal of the game is to find all matching pairs of cards. The cards are flipped two at a time, and matching pairs remain open.
+Features
+
+- Interactive gameplay: Randomized card layouts, card-flipping animations, move and matched-pair counters, and automatic win detection.
+
+- Persistent game state: The current game progress is saved in localStorage and restored after page reloads, preserving the card layout, score, moves, and elapsed time.
+
+- Save and resume games: Save an unfinished game, access it through the Saved Games menu, and resume or delete saved games.
+
+- Finish game: End the current game at any time and reset the game state.
+
+- Leaderboard: View the top 10 results, sorted by the number of moves, with results stored in localStorage.
+
+- Reusable modal windows: Custom modal dialogs for game results, the leaderboard, and game management.
+
+The application dynamically generates all HTML elements using JavaScript and uses localStorage to persist game progress and results between sessions.
 
 ## How to run locally
 
