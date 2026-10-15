@@ -5,8 +5,9 @@ import getTimerString from './getTimerString.js';
 import { startTimer, stopTimer } from './timer.js';
 
 export default function initGame(game) {
-  stopTimer();
+  stopTimer(0);
   resetGameState();
+  console.log(getGameState().time);
   generateCards(); // cards sequence is created here
 
   //startTimer(game);

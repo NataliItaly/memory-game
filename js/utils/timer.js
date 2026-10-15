@@ -1,12 +1,10 @@
-import { getGameState, setGameState } from '../states.js';
+import { setGameState } from '../states.js';
 import getTimerString from './getTimerString.js';
 
 let gameInterval = null;
-let startTime = getGameState().time || 0;
 
-export function startTimer(game) {
-  stopTimer();
-  const state = getGameState();
+export function startTimer(game, startTime) {
+  stopTimer(0);
   game.gameTimer.textContent = getTimerString(startTime);
 
   gameInterval = setInterval(function () {
@@ -17,7 +15,7 @@ export function startTimer(game) {
   }, 1000);
 }
 
-export function stopTimer() {
+export function stopTimer(startTime) {
   setGameState({ time: startTime });
   clearInterval(gameInterval);
   gameInterval = null;

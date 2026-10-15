@@ -24,13 +24,14 @@ const videoEl = videoElement();
 containerEl.append(headerEl, gameEl.game);
 document.body.prepend(videoEl, containerEl);
 
+let startTime = getGameState().time || 0;
 const state = getGameState();
 console.log('initial sequence', state.cardsSequence);
 if (state.cardsSequence.length > 0) {
   setGame(gameEl);
 
   if (state.isPlaying) {
-    startTimer(gameEl);
+    startTimer(gameEl, startTime);
   }
 } else {
   initGame(gameEl);
@@ -39,17 +40,21 @@ if (state.cardsSequence.length > 0) {
 window.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
     closeModal();
+
+    startTimer(gameEl, state.time);
   }
 });
 
 window.addEventListener('click', function (e) {
   if (e.target.closest('.header__init-game-btn')) {
+    startTime = 0;
     closeModal();
     initGame(gameEl);
   }
 
   if (e.target.closest('.modal__close')) {
     closeModal();
+    startTimer(gameEl, state.time);
   }
 
   if (
@@ -57,22 +62,27 @@ window.addEventListener('click', function (e) {
     !e.target.classList.contains('modal__content')
   ) {
     closeModal();
+    startTimer(gameEl, state.time);
   }
 
   if (e.target.closest('.header__score_btn')) {
     const winnerTableEl = winnerTableElement();
     document.body.prepend(winnerTableEl);
+
+    stopTimer(state.time);
   }
 
   if (e.target.closest('#pause-game-btn')) {
     const confirmModal = pauseGameConfirmModal();
     document.body.prepend(confirmModal);
+
     const currentState = getGameState();
-    console.log('current state when press pause', currentState);
+    stopTimer(currentState.time);
+    /*console.log('current state when press pause', currentState);
     const couples = [...currentState.couples];
     const cardsSequence = [...currentState.cardsSequence];
     console.log('couples', couples);
-    console.log('cardsSequence', cardsSequence);
+    console.log('cardsSequence', cardsSequence); */
   }
 
   if (e.target.closest('#confirm-pause-btn')) {
@@ -83,8 +93,7 @@ window.addEventListener('click', function (e) {
     const score = currentState.score;
     const steps = currentState.steps;
     const time = currentState.time;
-    console.log('couples', couples);
-    console.log('cardsSequence', cardsSequence);
+
     const id = crypto.randomUUID();
 
     const gameForSave = {
@@ -96,7 +105,7 @@ window.addEventListener('click', function (e) {
       id,
     };
     console.log('gameForSave', gameForSave);
-    stopTimer();
+    //stopTimer();
 
     // defensive check if localStorage doesn't have savedGames property
     const savedGames = Array.isArray(currentState.savedGames)
@@ -115,6 +124,8 @@ window.addEventListener('click', function (e) {
   if (e.target.closest('#saved-table-btn')) {
     const savedTableEl = savedGamesModal();
     document.body.prepend(savedTableEl);
+
+    stopTimer(state.time);
   }
 
   // resume saved game
@@ -184,14 +195,17 @@ window.addEventListener('click', function (e) {
   }
 
   if (e.target.closest('#confirm-btn')) {
-    stopTimer();
-    resetGameState();
+    startTime = 0;
+    //stopTimer(0);
+    initGame(gameEl);
+    /* resetGameState();
     generateCards();
-    setGame(gameEl);
+    setGame(gameEl); */
   }
 
   if (e.target.closest('.game__card')) {
     const currentState = getGameState();
+    console.log(currentState.time);
     console.log('sequence after click on card', getGameState().cardsSequence);
     // check if it's first turned card
     if (
@@ -200,7 +214,7 @@ window.addEventListener('click', function (e) {
       currentState.isPlaying === false
     ) {
       setGameState({ isPlaying: true });
-      startTimer(gameEl);
+      startTimer(gameEl, startTime);
     }
 
     const currentCard = e.target.closest('.game__card');
@@ -271,7 +285,7 @@ window.addEventListener('click', function (e) {
         ) {
           // set game finished
           currentState.isFinished = true;
-          stopTimer();
+          stopTimer(0);
 
           // fix completed game
           const date = setTimeString(new Date());
